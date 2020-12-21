@@ -3,14 +3,16 @@ var app = function(){
     // initiallize scene, camera, objects and renderer
 
     var scene, camera, renderer;
+    var meteors = [];
+    // var mixerCar;
+    // const clock = new THREE.Clock();
+    
 
     const ARROWLEFT = 68, ARROWRIGHT = 65, ARROWUP = 83, ARROWDOWN = 87;
 
-    const baseActions = {
-        idle: { weight: 1 },
-        walk: { weight: 0 },
-        run: { weight: 0 }
-    };
+    var randomInRange = function(min, max){
+        return Math.random()*(max-min)+min;
+    }
 
     // var create_crate = function(){
     //     var geometry = new THREE.BoxGeometry(1,1,1);
@@ -84,6 +86,76 @@ var app = function(){
         scene.add(skybox);
     }
 
+    // var meteor = function () {
+    //     // let material = new THREE.LineBasicMaterial({color: 0xffffff ,linewidth:1});
+
+    //     // let material = new THREE.LineDashedMaterial({color: 0xffffff ,linewidth:1,dashSize:1,gapSize:1});
+
+    //     // var material = new THREE.BoxGeometry(5,50,50);
+
+    //     // var geometry = new THREE.MeshBasicMaterial({color:0xffffff});
+
+    //     // // geometry.computeLineDistances();
+    //     // meteor = new THREE.Points(geometry,material);
+    //     // meteor.positioưn.set(0,0,0);
+
+    //     // scene.add(meteor);
+
+    //     var geometry = new THREE.Geometry();
+    //     var material = new THREE.PointsMaterial({
+    //         color: 0xffffff,
+    //     });
+    //     for(let i = 1; i<= 1000; i++){
+    //         let x = randomInRange(-25,25);
+    //         let y = randomInRange(-20,20);
+    //         let z = randomInRange(-20,20);
+    //         geometry.vertices.push(new THREE.Vector3(x,y,z));
+    //     }
+    //     meteor = new THREE.Mesh(geometry,material);
+    //     meteor.position.set(0,0,0);
+
+    //     scene.add(meteor);
+
+    // };
+    var meteor = function () {
+        // let material = new THREE.LineBasicMaterial({color: 0xffffff ,linewidth:1});
+
+        // let material = new THREE.LineDashedMaterial({color: 0xffffff ,linewidth:1,dashSize:1,gapSize:1});
+
+        // let material = new THREE.MeshNormalMaterial({transparent: true,});
+
+        // let geometry = new THREE.BoxGeometry(5,5,5000,5);
+
+        // for(let i = 1; i<= 1000; i++){
+        //     let x = randomInRange(2000,20);
+        //     let y = randomInRange(20,20);
+        //     let z = randomInRange(-20,20);
+        //     geometry.vertices.push(new THREE.Vector3(x,y,z));
+        // }
+
+        // // geometry.computeLineDistances();
+        // particles = new THREE.Mesh(geometry,material);
+
+        // scene.add(particles);
+
+        var material = new THREE.MeshBasicMaterial({
+            color:0xfff4bd
+          });
+          
+        
+          // Cube  
+        var geometry = new THREE.BoxGeometry(5, 5, 500,5);
+
+        var meteor = new THREE.Mesh(geometry,material);
+        meteor.position.x = randomInRange(-10000, 10000);
+        meteor.position.y = randomInRange(-10, 1000);
+        meteor.position.z = randomInRange(-2000, 10000);
+        meteor.name ="meteor";
+
+        scene.add(meteor);  
+        meteors.push(meteor);
+    };
+
     var create_ground = function(){
         // var geometry = new THREE.PlaneGeometry(50,50,50);
         // var grass_texture  = new THREE.TextureLoader().load("./data/textures/street.jpg");
@@ -105,6 +177,7 @@ var app = function(){
         // // ground.repeat.set( 4, 4 , 4);
         // scene.add(ground);
         var gltfLoader = new THREE.GLTFLoader();
+        
         gltfLoader.load(
             "./data/model/ground/scene.gltf",
             function(result){
@@ -119,13 +192,14 @@ var app = function(){
                 ground.position.y = -3;
                 ground.rotation.z = 3.2;
                 ground.rotation.z = 2*Math.PI/2;
+                ground.scale.y += window.innerWidth;
                 // ground.scale.y += window.innerWidth;    
                 // ground.scale.x += -500000;
                 // ground.position.x-= (size.x * 100000);
-                ground.scale.set(0.02,0.02,0.02);
-                ground.wrapS = THREE.RepeatWrapping;
-                ground.wrapT = THREE.RepeatWrapping;
-                ground.repeat.set( 3, 900 );
+                ground.scale.set(0.09,1,0.05);
+                // ground.wrapS = THREE.RepeatWrapping;
+                // ground.wrapT = THREE.RepeatWrapping;
+                // ground.repeat.set( 3, 900 );
 
             },
             function(xhr){
@@ -133,8 +207,9 @@ var app = function(){
             },
             function(error){
                 console.log('An error happened ' + error);
-            },
+            },  
         )
+        
     }
 
     var load_car_model = function(){
@@ -151,7 +226,10 @@ var app = function(){
                 // car.position.z = -30;
                 car.scale.set(0.08,0.08,0.08);
                 // const animations = gltf.animations;
-				// mixer = new THREE.AnimationMixer( car );
+                // mixerCar = new THREE.AnimationMixer(car);
+                // gltfLoader.animation.forEach((clip) => {
+                //     mixerCar.clipAction(clip).play();
+                // });
 
 				// 	numAnimations = animations.length;
 
@@ -223,6 +301,10 @@ var app = function(){
     //     )
     // }
 
+    var a=function(meteor){
+        meteor.position.z += 50;
+    }
+
     var onKeyDown = function(e){
         console.log("the current key:"+e.keyCode);
         switch(e.keyCode){
@@ -234,9 +316,12 @@ var app = function(){
                 break;
             case ARROWUP:
                 ground.position.z += 10;
+                
+
                 break;
             case ARROWDOWN:
                 ground.position.z += -10;
+                meteors.forEach(a);
                 break;
             default:
                 console.log("the current key:"+e.keyCode);
@@ -246,7 +331,7 @@ var app = function(){
     var init_app = function() {
         // 1. create the scene
         scene = new THREE.Scene();
-
+        
         // scene.fog = new THREE.Fog(0xFFFFFF, 100, 100);
         // create background
         // scene.background = new THREE.Color(0xffffff);
@@ -259,7 +344,7 @@ var app = function(){
         // camera.position.x = 20;
         // camera.position.y = -10;
 
-        camera.position.set( 0, 10, -40);
+        camera.position.set( 0, 30, -40);
         camera.rotation.y += 3.1;
         camera.rotation.x = 0.3;
 
@@ -288,11 +373,12 @@ var app = function(){
        
         
         
-        // create_crate();
         create_skybox();
         create_ground();
-        // create_sphere();
         load_car_model();
+        // meteor();
+        
+
 
         document.addEventListener("keydown", onKeyDown,false);
         
@@ -312,48 +398,41 @@ var app = function(){
         // controls.campingFactor = 0.25;
         // console.log(camera.position.set());
         // controls.update();
-        renderer.render( scene, camera );
+        // renderer.render( scene, camera );
     };
+
+    var update_meteor = function(meteor){
+            meteor.position.z += 15;
+    }
 
     // main animation loop - calls every 50-60ms.
     var mainLoop = function(){
-        requestAnimationFrame(mainLoop);
 
         // controls.update();
-        // camera.rotation.y += 0.01;
-        // crate.rotation.x += 0.03;
-        // crate.rotation.y += 0.03;
 
-        // camera.rotation.y += 0.01;
-        // skybox.rotation.y += 0.03;
-   
-        // cylinder.rotation.x += 0.02;
-        // cylinder.rotation.y += 0.02;
-        // sphere.position.z +=10;
-        // sphere.rotation.x +=0.05;
-        // ground.position.z += -0.5;
+        
+        let rand = Math.random();
+        if(rand < 100){
+            meteor();
+        }
+        meteors.forEach(update_meteor);
 
-        // if(number == 100){
-        //     sphere.position.x =  sphere.position.x - number;
-        // }
-        // else{
-        //     sphere.position.x =  sphere.position.x + number;
-        // }
-
-        // torus.rotation.x += 0.01;
-        // torus.rotation.y += 0.01;
         renderer.render(scene,camera);
+        requestAnimationFrame(mainLoop);
     };
+
+    
 
 
     // function animate() {
-
+    //     const delta = clock.getDelta();
+    //     mixerCar.update(delta);
     //     requestAnimationFrame( animate );
     
     //     // required if controls.enableDamping or controls.autoRotate are set to true
-    //     controls.update();
+    //     // controls.update();
     
-    //     renderer.render( scene, camera );
+    //     // renderer.render( scene, camera );
     
     // }
     init_app();
