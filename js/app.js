@@ -4,25 +4,72 @@ var app = function(){
 
     var scene, camera, renderer;
     var meteors = [];
-    // var mixerCar;
-    // const clock = new THREE.Clock();
+    var mixers = [];
+    var crates = [];
+    // var mixerPlane;
+    const clock = new THREE.Clock();
     
-
-    const ARROWLEFT = 68, ARROWRIGHT = 65, ARROWUP = 83, ARROWDOWN = 87;
 
     var randomInRange = function(min, max){
         return Math.random()*(max-min)+min;
     }
 
     // var create_crate = function(){
-    //     var geometry = new THREE.BoxGeometry(1,1,1);
+    //     var geometry = new THREE.BoxGeometry(10,10,10);
     //     var crate_texture = new THREE.TextureLoader().load("./data/textures/crate0_diffuse.png");
     //     var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
     //     var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
     //     var material = new THREE.MeshPhongMaterial({map:crate_texture,bumpMap:bump_map_texture,normalMap:normal_map_texture});
-    //     var crate = new THREE.Mesh(geometry,material);
+    //     crate = new THREE.Mesh(geometry,material);
+    //     // crate.position.set(0,10,0);
+    //     crate.position.x = randomInRange(-30, 30);
+    //     crate.position.y = 10;
+    //     crate.position.z = 500;
+    //     crate.scale.x = randomInRange(1, 5);
+    //     crate.scale.z = randomInRange(1, 5);
     //     scene.add(crate);
+
+    //     crate.name ="crate";
+    //     crates.push(crate);
     // };
+
+    var create_crate = function(){
+        var geometry = new THREE.SphereGeometry(7,50,50);
+        var crate_texture = new THREE.TextureLoader().load("./data/image/dolar.jpg");
+        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
+        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
+        var material = new THREE.MeshPhongMaterial({map:crate_texture});
+        crate = new THREE.Mesh(geometry,material);
+        // crate.position.set(0,10,0);
+        crate.position.x = randomInRange(-30, 30);
+        crate.position.y = 10;
+        crate.position.z = 500;
+        // crate.scale.x = randomInRange(1, 5);
+        // crate.scale.z = randomInRange(1, 5);
+        scene.add(crate);
+
+        crate.name ="crate";
+        crates.push(crate);
+    };
+
+    var random_crate = function(){
+        crate.position.z += -2;
+        if(crate.position.z - plane.position.z <= 1){
+            if((crate.position.x + 10) >= plane.position.x && (crate.position.x - 10) <= plane.position.x){
+                scene.remove(crate);
+                create_crate();
+            }
+        }
+    }
+
+    var limit_plane = function(){
+        if(plane.position.x >= 30){
+            plane.position.x = 30;
+        }
+        if(plane.position.x <= -30){
+            plane.position.x = -30;
+        }
+    }
 
     // var create_crate = function() {
     //     var geometry = new THREE.BoxGeometry(1,1,1);
@@ -86,6 +133,16 @@ var app = function(){
         scene.add(skybox);
     }
 
+    // var create_skybox = function(){
+    //     var geometry = new THREE.SphereGeometry(10000,10000,10000);
+    //     textureEquirec = new THREE.TextureLoader().load('./data/image/sky2.jpg');
+    //     textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
+    //     textureEquirec.encoding = THREE.sRGBEncoding;
+
+    //     scene.background = textureEquirec;
+        
+    // }
+
     // var meteor = function () {
     //     // let material = new THREE.LineBasicMaterial({color: 0xffffff ,linewidth:1});
 
@@ -139,7 +196,7 @@ var app = function(){
         // scene.add(particles);
 
         var material = new THREE.MeshBasicMaterial({
-            color:0xfff4bd
+            color:Math.random()*0xfff4bd
           });
           
         
@@ -184,11 +241,11 @@ var app = function(){
                 // object.position.y -= 10;
                 ground = result.scene.children[0];
                 ground.scale.setScalar(3);
-                scene.add(ground);
+                
                 ground.position.y=30;
                 ground.position.x = 0;
-                ground.position.z = -30
-                ground.position.z = 50;
+                // ground.position.z = 5000;
+                ground.position.z = 5000;
                 ground.position.y = -3;
                 ground.rotation.z = 3.2;
                 ground.rotation.z = 2*Math.PI/2;
@@ -200,6 +257,7 @@ var app = function(){
                 // ground.wrapS = THREE.RepeatWrapping;
                 // ground.wrapT = THREE.RepeatWrapping;
                 // ground.repeat.set( 3, 900 );
+                scene.add(ground);
 
             },
             function(xhr){
@@ -212,121 +270,69 @@ var app = function(){
         
     }
 
-    var load_car_model = function(){
-        var gltfLoader = new THREE.GLTFLoader();
-        gltfLoader.load(
-            "./data/model/robot/Xbot.glb",
-            function(result){
-                // object.position.y -= 10;
-                car = result.scene.children[0];
-                car.scale.setScalar(3);
-                scene.add(car);
-                car.position.y=-2.8;
-                // car.position.x = 28;
-                // car.position.z = -30;
-                car.scale.set(0.08,0.08,0.08);
-                // const animations = gltf.animations;
-                // mixerCar = new THREE.AnimationMixer(car);
-                // gltfLoader.animation.forEach((clip) => {
-                //     mixerCar.clipAction(clip).play();
-                // });
+    var createPlaneModel = function(){
+        modelLoader = new THREE.GLTFLoader();
+        modelLoader.load('./data/model/RobotExpressive/RobotExpressive.glb', function(gltf){
+            plane = gltf.scene;
+            // plane.rotation.y = MY_LIBS.degToRad(90);
+            plane.scale.set(5,5,5);
+            // plane.position.x = 6050;
+            plane.position.z = 0;
+            plane.position.x = 0;
+            scene.add(plane);
+            mixerPlane = new THREE.AnimationMixer(plane);
+            // gltf.animations.forEach((clip) => {
+            //     mixerPlane.clipAction( gltf.animations[ 3 ] ).play();
+            //     mixers.push(mixerPlane);
+            // });s
+            for(let i = 0; i <= gltf.animations.length; i++ ){
+                mixerPlane.clipAction( gltf.animations[6] ).play();
+                // mixers.push(mixerPlane);
+            }
+            // idleAction = mixerPlane.clipAction( gltf.animations[ 2 ] ).play();
+            // walkAction  = mixerPlane.clipAction( gltf.animations[ 1 ] ).play();
+            // runAction   = mixerPlane.clipAction( gltf.animations[ 2 ] ).play();
 
-				// 	numAnimations = animations.length;
-
-				// 	for ( let i = 0; i !== numAnimations; ++ i ) {
-
-				// 		let clip = animations[ i ];
-				// 		const name = clip.name;
-
-				// 		if ( baseActions[ name ] ) {
-
-				// 			const action = mixer.clipAction( clip );
-				// 			activateAction( action );
-				// 			baseActions[ name ].action = action;
-				// 			allActions.push( action );
-
-				// 		} else if ( additiveActions[ name ] ) {
-
-				// 			// Make the clip additive and remove the reference frame
-
-				// 			THREE.AnimationUtils.makeClipAdditive( clip );
-
-				// 			if ( clip.name.endsWith( '_pose' ) ) {
-
-				// 				clip = THREE.AnimationUtils.subclip( clip, clip.name, 2, 3, 30 );
-
-				// 			}
-
-				// 			const action = mixer.clipAction( clip );
-				// 			activateAction( action );
-				// 			additiveActions[ name ].action = action;
-				// 			allActions.push( action );
-
-				// 		}
-
-                //     }
-                //     createPanel();
-
-				// 	animate();
-
-            },
-            function(xhr){
-                console.log("the car model is" + (xhr.loaded / xhr.total * 100) + '% loaded');
-            },
-            function(error){
-                console.log('An error happened ' + error);
-            },
-        )
+            // result = [ idleAction, walkAction, runAction ];
+            mixers.push(mixerPlane);
+        });
     }
 
-    // var load_car_model = function(){
-    //     var gltfLoader = new THREE.GLTFLoader();
-    //     gltfLoader.load(
-    //         "./data/model/car/scene.gltf",
-    //         function(result){
-    //             // object.position.y -= 10;
-    //             car = result.scene.children[0];
-    //             car.scale.setScalar(3);
-    //             scene.add(car);
-    //             car.position.set(0,0,0);
 
-
-    //         },
-    //         function(xhr){
-    //             console.log("the car model is" + (xhr.loaded / xhr.total * 100) + '% loaded');
-    //         },
-    //         function(error){
-    //             console.log('An error happened ' + error);
-    //         },
-    //     )
+    // var a=function(meteor){
+    //     meteor.position.z += 50;
     // }
 
-    var a=function(meteor){
-        meteor.position.z += 50;
-    }
-
-    var onKeyDown = function(e){
+    var onDocumentKeyDown = function(e){
         console.log("the current key:"+e.keyCode);
         switch(e.keyCode){
-            case ARROWLEFT:
-                car.position.x += -0.8;
-                break;
-            case ARROWRIGHT:
-                car.position.x += 0.8;
-                break;
-            case ARROWUP:
-                ground.position.z += 10;
-                
+            case 68:
+                plane.position.x += -1;
+                plane.rotation.y += -1;
 
+                if(plane.rotation.y <= -1){
+                    plane.rotation.y = -1;
+                }
                 break;
-            case ARROWDOWN:
-                ground.position.z += -10;
-                meteors.forEach(a);
+                
+            case 65:
+                plane.position.x += 1;
+                plane.rotation.y += 1;
+
+                if(plane.rotation.y >= 1){
+                    plane.rotation.y = 1;
+                }
                 break;
+
+            case 87: 
+                plane.rotation.y = 0;
+                break;
+            
             default:
                 console.log("the current key:"+e.keyCode);
         }
     }
+
 
     var init_app = function() {
         // 1. create the scene
@@ -339,7 +345,7 @@ var app = function(){
 
         // 2. create an locate the camera
         var canvasWidth = window.innerWidth, canvasHeight = window.innerHeight;
-        var feilfOfViewY = 60, aspectRatio = canvasWidth/ canvasHeight, near=1.0, far=10000.0;
+        var feilfOfViewY = 60, aspectRatio = canvasWidth/ canvasHeight, near=1.0, far=100000.0;
         camera = new THREE.PerspectiveCamera(feilfOfViewY, aspectRatio, near, far);
         // camera.position.x = 20;
         // camera.position.y = -10;
@@ -355,18 +361,18 @@ var app = function(){
         scene.add(ambientLight);
 
         var pointLight = new THREE.PointLight(0xffffff,0.8,100);
-        pointLight.position.set(0, 0, 0); 
+        pointLight.position.set(0, 10, 10); 
         scene.add(pointLight);
 
         const keyLight = new THREE.DirectionalLight(0xffffff, 1);
-        keyLight.position.set(0,0,-20);
+        keyLight.position.set(0,10,-10);
         // keyLight.rotation.y = 100;
         scene.add(keyLight);
-        // const fillLight = new THREE.DirectionalLight(0xffffff, 5);
-        // fillLight.position.set(0, 5, 0);
-        // scene.add(fillLight);
+        const fillLight = new THREE.DirectionalLight(0xffffff, 1);
+        fillLight.position.set(10, 10, -5);
+        scene.add(fillLight);
         // const backLight = new THREE.DirectionalLight(0xffffff, 1);
-        // backLight.position.set(0, 20,0);
+        // backLight.position.set(-10, 10,5);
         // backLight.rotation.x=20
         // scene.add(backLight);
 
@@ -375,12 +381,13 @@ var app = function(){
         
         create_skybox();
         create_ground();
-        load_car_model();
+        createPlaneModel();
+        create_crate();
         // meteor();
         
 
 
-        document.addEventListener("keydown", onKeyDown,false);
+        document.addEventListener("keydown", onDocumentKeyDown,true);
         
 
 
@@ -405,36 +412,74 @@ var app = function(){
             meteor.position.z += 15;
     }
 
+    // var update_crates = function(crate){
+    //     crate.position.z -= 1;
+    // }
+
+    var animate = function(){
+        const delta = clock.getDelta();
+        // mixerPlane.update(delta);
+        for(let i =0; i< mixers.length; i++)
+        mixers[i].update(delta);
+        // mixers[1].update(delta);
+    }
+
     // main animation loop - calls every 50-60ms.
     var mainLoop = function(){
+        
 
         // controls.update();
 
+        // for(let i = 0; i < mixers.length;i++)
+        //     mixers[i].update(delta);
         
+        animate();
+        
+
         let rand = Math.random();
         if(rand < 100){
             meteor();
+            // create_crate();
         }
-        meteors.forEach(update_meteor);
 
-        renderer.render(scene,camera);
+        // if(rand < 0.05){
+        //     create_crate();
+        // }
+
+        // if(meteors[meteors.length-1].position.z > 9000){
+        //     create_crate();
+        // }
+
+        // for(let i = 0; i <= 1000; i++){
+        //     setInterval(function(){
+        //     }, 2000);
+        // }
+
+        // setInterval(function(){
+        //     // create_crate();
+        //     crates.forEach(update_crates);
+        // }, 5000);
+
+        // update_crates();
+
+        
+        meteors.forEach(update_meteor);
+        crate.rotation.y += MY_LIBS.degToRad(3);
+
+
+        
+        
+        
+        // crate.position.z += -0.5;
+
         requestAnimationFrame(mainLoop);
+        ground.position.z += -0.5;
+        random_crate();
+        limit_plane();
+        renderer.render(scene,camera);
     };
 
-    
 
-
-    // function animate() {
-    //     const delta = clock.getDelta();
-    //     mixerCar.update(delta);
-    //     requestAnimationFrame( animate );
-    
-    //     // required if controls.enableDamping or controls.autoRotate are set to true
-    //     // controls.update();
-    
-    //     // renderer.render( scene, camera );
-    
-    // }
     init_app();
     mainLoop();
     // animate();
