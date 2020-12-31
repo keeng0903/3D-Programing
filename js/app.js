@@ -1,75 +1,133 @@
-
 var app = function(){
     // initiallize scene, camera, objects and renderer
 
     var scene, camera, renderer;
     var meteors = [];
     var mixers = [];
-    var crates = [];
+    var bullets = [];
+    var count = 0;
+    // var ground;
     // var mixerPlane;
     const clock = new THREE.Clock();
-    
 
     var randomInRange = function(min, max){
         return Math.random()*(max-min)+min;
     }
 
-    // var create_crate = function(){
-    //     var geometry = new THREE.BoxGeometry(10,10,10);
-    //     var crate_texture = new THREE.TextureLoader().load("./data/textures/crate0_diffuse.png");
-    //     var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
-    //     var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
-    //     var material = new THREE.MeshPhongMaterial({map:crate_texture,bumpMap:bump_map_texture,normalMap:normal_map_texture});
-    //     crate = new THREE.Mesh(geometry,material);
-    //     // crate.position.set(0,10,0);
-    //     crate.position.x = randomInRange(-30, 30);
-    //     crate.position.y = 10;
-    //     crate.position.z = 500;
-    //     crate.scale.x = randomInRange(1, 5);
-    //     crate.scale.z = randomInRange(1, 5);
-    //     scene.add(crate);
-
-    //     crate.name ="crate";
-    //     crates.push(crate);
-    // };
-
-    var create_crate = function(){
+    var create_sphere = function(){
         var geometry = new THREE.SphereGeometry(7,50,50);
         var crate_texture = new THREE.TextureLoader().load("./data/image/dolar.jpg");
         // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
         // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
         var material = new THREE.MeshPhongMaterial({map:crate_texture});
-        crate = new THREE.Mesh(geometry,material);
+        sphere = new THREE.Mesh(geometry,material);
         // crate.position.set(0,10,0);
-        crate.position.x = randomInRange(-30, 30);
-        crate.position.y = 10;
-        crate.position.z = 500;
+        sphere.position.x = randomInRange(-30, 30);
+        sphere.position.y = 10;
+        sphere.position.z = 500;
         // crate.scale.x = randomInRange(1, 5);
         // crate.scale.z = randomInRange(1, 5);
-        scene.add(crate);
+        scene.add(sphere);
 
-        crate.name ="crate";
-        crates.push(crate);
+        // sphere.name ="sphere";
+        // spheres.push(sphere);
     };
 
-    var random_crate = function(){
-        crate.position.z += -2;
-        if(crate.position.z - plane.position.z <= 1){
-            if((crate.position.x + 10) >= plane.position.x && (crate.position.x - 10) <= plane.position.x){
-                scene.remove(crate);
-                create_crate();
+    var create_bullet = function(){
+        var geometry = new THREE.SphereGeometry(3,50,50);
+        // var crate_texture = new THREE.TextureLoader().load("./data/image/dolar.jpg");
+        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
+        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
+        var material = new THREE.MeshBasicMaterial({color: 0xfca903});
+        bullet = new THREE.Mesh(geometry,material);
+        // crate.position.set(0,10,0);
+        // bullet.position.x = randomInRange(-30, 30);
+        bullet.position.y = randomInRange(5,15);
+        bullet.position.z = 0;
+        // crate.scale.x = randomInRange(1, 5);
+        // crate.scale.z = randomInRange(1, 5);
+        // scene.add(bullet);
+
+        bullet.name ="bullet";
+        bullets.push(bullet);
+    }
+
+    // var add_bullet = function(){
+    //     scene.add(bullet);
+
+    //     bullet.name ="bullet";
+    //     bullets.push(bullet);
+    // }
+
+    
+
+    var position_bullet = function(){
+        bullet.position.z += 2;
+        // if(bullet.position.x != robot.position.x){
+        //     scene.remove(bullet);
+        // }
+        // if(bullets.length != 0){
+        //     bullet.position.z += 2;
+        // }
+    }
+
+    var update_bullet = function(){
+        bullet.position.x = randomInRange(robot.position.x + 7 ,robot.position.x - 7);
+        bullet.position.z = 0;
+        scene.add(bullet);
+        
+        // let rand = Math.random();
+        // if(rand < 100){
+        //     create_bullet();
+        //     scene.add(bullet);
+        // }
+
+        // bullets.forEach(abc);
+    }
+
+    var random_sphere = function(){
+        // var interval_obj = setInterval(function(){
+        //     crate.position.z += -2;
+        //     clearInterval(interval_obj);
+        // }, 5000);
+        
+        sphere.position.z += -2;    
+        
+        // if(sphere.position.z - robot.position.z <= 1){
+        //     if((sphere.position.x + 10) >= robot.position.x && (sphere.position.x - 10) <= robot.position.x){
+        //         if(scene.remove(sphere)){
+        //             count++;
+        //             var elem = document.getElementById("score");
+        //             elem.innerHTML = count;
+        //         }
+        //         create_sphere();
+        //     }
+        // }
+        if(sphere.position.z <= -10){
+            document.getElementById("modal-lose").style.display = "block";
+        }
+        if(sphere.position.z - bullet.position.z <=1){
+            if((sphere.position.x + 10) >= bullet.position.x && (sphere.position.x - 10) <= bullet.position.x){
+                scene.remove(sphere)
+                count++;
+                var elem = document.getElementById("score");
+                elem.innerHTML = count;
+                create_sphere();
+                scene.remove(bullet);
             }
         }
     }
 
-    var limit_plane = function(){
-        if(plane.position.x >= 30){
-            plane.position.x = 30;
+
+    var limit_ground = function(){
+        if(robot.position.x >= 30){
+            robot.position.x = 30;
         }
-        if(plane.position.x <= -30){
-            plane.position.x = -30;
+        if(robot.position.x <= -30){
+            robot.position.x = -30;
         }
     }
+
 
     // var create_crate = function() {
     //     var geometry = new THREE.BoxGeometry(1,1,1);
@@ -214,25 +272,6 @@ var app = function(){
     };
 
     var create_ground = function(){
-        // var geometry = new THREE.PlaneGeometry(50,50,50);
-        // var grass_texture  = new THREE.TextureLoader().load("./data/textures/street.jpg");
-        // // var normal_texture = new THREE.TextureLoader().load("./data/textures/grass/Green-Grass-Ground-Texture-NORMAL.jpg");
-        // // var disp_texture = new THREE.TextureLoader().load("./data/textures/grass/Green-Grass-Ground-Texture-DISP.jpg");
-        // // var specular_texture = new THREE.TextureLoader().load("./data/textures/grass/Green-Grass-Ground-Texture-SPECULAR.jpg");
-        // grass_texture.wrapS = THREE.RepeatWrapping;
-        // grass_texture.wrapT = THREE.RepeatWrapping;
-        // grass_texture.repeat.set( 3, 900 );
-        // var material = new THREE.MeshBasicMaterial({map:grass_texture})
-        // ground = new THREE.Mesh(geometry,material);
-        // ground.position.z = -25;
-        // ground.position.y = -4;
-        // ground.rotation.x -= Math.PI/2;
-        // ground.scale.y += window.innerWidth;    
-        // ground.scale.x += 0.5;
-        // // ground.wrapS = THREE.RepeatWrapping;
-        // // ground.wrapT = THREE.RepeatWrapping;
-        // // ground.repeat.set( 4, 4 , 4);
-        // scene.add(ground);
         var gltfLoader = new THREE.GLTFLoader();
         
         gltfLoader.load(
@@ -270,31 +309,21 @@ var app = function(){
         
     }
 
-    var createPlaneModel = function(){
+    var create_robot = function(){
         modelLoader = new THREE.GLTFLoader();
         modelLoader.load('./data/model/RobotExpressive/RobotExpressive.glb', function(gltf){
-            plane = gltf.scene;
+            robot = gltf.scene;
             // plane.rotation.y = MY_LIBS.degToRad(90);
-            plane.scale.set(5,5,5);
+            robot.scale.set(5,5,5);
             // plane.position.x = 6050;
-            plane.position.z = 0;
-            plane.position.x = 0;
-            scene.add(plane);
-            mixerPlane = new THREE.AnimationMixer(plane);
-            // gltf.animations.forEach((clip) => {
-            //     mixerPlane.clipAction( gltf.animations[ 3 ] ).play();
-            //     mixers.push(mixerPlane);
-            // });s
-            for(let i = 0; i <= gltf.animations.length; i++ ){
-                mixerPlane.clipAction( gltf.animations[6] ).play();
-                // mixers.push(mixerPlane);
-            }
-            // idleAction = mixerPlane.clipAction( gltf.animations[ 2 ] ).play();
-            // walkAction  = mixerPlane.clipAction( gltf.animations[ 1 ] ).play();
-            // runAction   = mixerPlane.clipAction( gltf.animations[ 2 ] ).play();
-
-            // result = [ idleAction, walkAction, runAction ];
-            mixers.push(mixerPlane);
+            robot.position.z = 0;
+            robot.position.x = 0;
+            scene.add(robot);
+            mixerRobot = new THREE.AnimationMixer(robot);
+            // for(let i = 0; i <= gltf.animations.length; i++ ){
+            mixerRobot.clipAction( gltf.animations[6] ).play();
+            // }
+            mixers.push(mixerRobot);
         });
     }
 
@@ -307,25 +336,29 @@ var app = function(){
         console.log("the current key:"+e.keyCode);
         switch(e.keyCode){
             case 68:
-                plane.position.x += -1;
-                plane.rotation.y += -1;
+                robot.position.x += -1;
+                robot.rotation.y += -1;
 
-                if(plane.rotation.y <= -1){
-                    plane.rotation.y = -1;
+                if(robot.rotation.y <= -1){
+                    robot.rotation.y = -1;
                 }
                 break;
                 
             case 65:
-                plane.position.x += 1;
-                plane.rotation.y += 1;
+                robot.position.x += 1;
+                robot.rotation.y += 1;
 
-                if(plane.rotation.y >= 1){
-                    plane.rotation.y = 1;
+                if(robot.rotation.y >= 1){
+                    robot.rotation.y = 1;
                 }
                 break;
 
             case 87: 
-                plane.rotation.y = 0;
+                robot.rotation.y = 0;
+                break;
+
+            case 32:
+                update_bullet();
                 break;
             
             default:
@@ -378,11 +411,14 @@ var app = function(){
 
        
         
-        
-        create_skybox();
+        create_sphere();
+        create_bullet();
+        // create_plane();
         create_ground();
-        createPlaneModel();
-        create_crate();
+
+        create_skybox();
+        create_robot();
+
         // meteor();
         
 
@@ -418,20 +454,12 @@ var app = function(){
 
     var animate = function(){
         const delta = clock.getDelta();
-        // mixerPlane.update(delta);
         for(let i =0; i< mixers.length; i++)
         mixers[i].update(delta);
-        // mixers[1].update(delta);
     }
 
     // main animation loop - calls every 50-60ms.
     var mainLoop = function(){
-        
-
-        // controls.update();
-
-        // for(let i = 0; i < mixers.length;i++)
-        //     mixers[i].update(delta);
         
         animate();
         
@@ -439,43 +467,23 @@ var app = function(){
         let rand = Math.random();
         if(rand < 100){
             meteor();
-            // create_crate();
         }
 
-        // if(rand < 0.05){
-        //     create_crate();
-        // }
-
-        // if(meteors[meteors.length-1].position.z > 9000){
-        //     create_crate();
-        // }
-
-        // for(let i = 0; i <= 1000; i++){
-        //     setInterval(function(){
-        //     }, 2000);
-        // }
-
-        // setInterval(function(){
-        //     // create_crate();
-        //     crates.forEach(update_crates);
-        // }, 5000);
-
-        // update_crates();
-
-        
         meteors.forEach(update_meteor);
-        crate.rotation.y += MY_LIBS.degToRad(3);
 
 
+        // plane.rotation.x += -2;
+
         
-        
-        
-        // crate.position.z += -0.5;
+        sphere.rotation.y += MY_LIBS.degToRad(3);
 
         requestAnimationFrame(mainLoop);
         ground.position.z += -0.5;
-        random_crate();
-        limit_plane();
+        random_sphere();
+        limit_ground();
+        position_bullet();
+        // update_bullet();
+        // random_plane();
         renderer.render(scene,camera);
     };
 

@@ -13,8 +13,9 @@
         <script type="text/javascript" src="./js/GLTFLoader.js"></script>
         <script type="text/javascript" src="./js/PointerLockControls.js"></script>
         <link rel="stylesheet" href="loading.css">
-        <script type="text/javascript" src="./js/loading.js"></script>
+        <!-- <script type="text/javascript" src="./js/loading.js"></script> -->
         <script type="text/javascript" src="./js/libs.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -24,6 +25,8 @@
 
         
         <div id="loading" class="wrapper">
+            <img class="pt-5" src="data/image/logo-game.png" alt="">
+
             <div class="center">
                 <div id="loading-percent">
                     <p>Loading</p>
@@ -33,7 +36,7 @@
         
         
                 <div id="img-rotation">
-                    <button onclick="myFunction()" class="start-btn">Start</button>
+                    <button onclick="starbutton()" class="start-btn">Start</button>
                 </div>
             </div>
 
@@ -69,6 +72,18 @@
                 </div>
             </div>
         </div>
+        <div id="modal-lose" style="display: none;" >
+            <div class="custom-tryagain">
+                <img class="pt-5 logo-game" src="data/image/logo-game.png" alt="">
+                <img src="data/image/gameover.png" alt="">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores quidem fugiat unde enim omnis repudiandae itaque. Delectus ab ex praesentium et distinctio. Labore, vero. Rem rerum amet sequi qui esse!</p>
+                <button  class="start-btn start-btn green" onclick="tryagain()">Try Again</button>
+            </div>
+        </div>
+
+        <div class="score-main" id="score-main">
+            <h2>Score: <span class="score" id="score">0</span></h2>
+        </div>
 
 
         
@@ -85,9 +100,14 @@
             //     clearInterval(interval_obj);
             // }, 5000);
         
-            function myFunction() {
+            function starbutton() {
                 var loading = document.getElementById("loading")
                 loading.style.display ="none";
+                document.getElementById("score-main").style.display = "block";
+            }
+
+            function tryagain() {
+                window.location.reload();
             }
         
             function move() {
