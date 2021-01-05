@@ -36,12 +36,11 @@
         
         
                 <div id="img-rotation">
-                    <button onclick="starbutton()" class="start-btn">Start</button>
+                    <button onclick="starbutton()" id="starbutton" class="start-btn">Start</button>
                 </div>
-            </div>
-
-            
+            </div>  
         </div>
+
         <div class="modal-custom"> 
             <button type="button" class="btn-modal" data-toggle="modal" data-target="#exampleModalCenter">
                 Help
@@ -104,16 +103,20 @@
                 var loading = document.getElementById("loading")
                 loading.style.display ="none";
                 document.getElementById("score-main").style.display = "block";
+                document.getElementById("modal-lose").style.display = "none";
             }
 
             function tryagain() {
-                window.location.reload();
+                var loading = document.getElementById("loading")
+                loading.style.display ="block";
+                loading.style.zIndex = 10;
+                document.getElementById("score-main").style.display = "none";
             }
         
             function move() {
                 var elem = document.getElementById("progress");   
                 var width = 1;
-                var id = setInterval(frame, 10);
+                var id = setInterval(frame, 30);
                 function frame() {
                     if (width >= 100) {
                         clearInterval(id);

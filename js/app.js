@@ -4,8 +4,11 @@ var app = function(){
     var scene, camera, renderer;
     var meteors = [];
     var mixers = [];
-    var bullets = [];
+    var sphere;
+    var spheres = [];
     var count = 0;
+    var animation;
+    var callanimation = [];
     // var ground;
     // var mixerPlane;
     const clock = new THREE.Clock();
@@ -15,83 +18,28 @@ var app = function(){
     }
 
     var create_sphere = function(){
-        var geometry = new THREE.SphereGeometry(7,50,50);
+        var geometry = new THREE.CylinderGeometry(5, 5, 60, 50);
         var crate_texture = new THREE.TextureLoader().load("./data/image/dolar.jpg");
         // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
         // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
         var material = new THREE.MeshPhongMaterial({map:crate_texture});
         sphere = new THREE.Mesh(geometry,material);
         // crate.position.set(0,10,0);
-        sphere.position.x = randomInRange(-30, 30);
-        sphere.position.y = 10;
+        sphere.position.x = 0;
+        sphere.position.y = 15;
         sphere.position.z = 500;
-        // crate.scale.x = randomInRange(1, 5);
+        sphere.rotation.z = MY_LIBS.degToRad(90);
+        // sphere.scale.y = randomInRange(1, 5);
         // crate.scale.z = randomInRange(1, 5);
         scene.add(sphere);
 
-        // sphere.name ="sphere";
-        // spheres.push(sphere);
+        sphere.name ="sphere";
+        spheres.push(sphere);
     };
 
-    var create_bullet = function(){
-        var geometry = new THREE.SphereGeometry(3,50,50);
-        // var crate_texture = new THREE.TextureLoader().load("./data/image/dolar.jpg");
-        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
-        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
-        var material = new THREE.MeshBasicMaterial({color: 0xfca903});
-        bullet = new THREE.Mesh(geometry,material);
-        // crate.position.set(0,10,0);
-        // bullet.position.x = randomInRange(-30, 30);
-        bullet.position.y = randomInRange(5,15);
-        bullet.position.z = 0;
-        // crate.scale.x = randomInRange(1, 5);
-        // crate.scale.z = randomInRange(1, 5);
-        // scene.add(bullet);
-
-        bullet.name ="bullet";
-        bullets.push(bullet);
-    }
-
-    // var add_bullet = function(){
-    //     scene.add(bullet);
-
-    //     bullet.name ="bullet";
-    //     bullets.push(bullet);
-    // }
-
-    
-
-    var position_bullet = function(){
-        bullet.position.z += 2;
-        // if(bullet.position.x != robot.position.x){
-        //     scene.remove(bullet);
-        // }
-        // if(bullets.length != 0){
-        //     bullet.position.z += 2;
-        // }
-    }
-
-    var update_bullet = function(){
-        bullet.position.x = randomInRange(robot.position.x + 7 ,robot.position.x - 7);
-        bullet.position.z = 0;
-        scene.add(bullet);
+    var random_sphere = function(sphere){
         
-        // let rand = Math.random();
-        // if(rand < 100){
-        //     create_bullet();
-        //     scene.add(bullet);
-        // }
-
-        // bullets.forEach(abc);
-    }
-
-    var random_sphere = function(){
-        // var interval_obj = setInterval(function(){
-        //     crate.position.z += -2;
-        //     clearInterval(interval_obj);
-        // }, 5000);
-        
-        sphere.position.z += -2;    
+         
         
         // if(sphere.position.z - robot.position.z <= 1){
         //     if((sphere.position.x + 10) >= robot.position.x && (sphere.position.x - 10) <= robot.position.x){
@@ -103,19 +51,55 @@ var app = function(){
         //         create_sphere();
         //     }
         // }
-        if(sphere.position.z <= -10){
-            document.getElementById("modal-lose").style.display = "block";
+        // if(sphere.position.z <= -10){
+        //     document.getElementById("modal-lose").style.display = "block";
+        //     cancelAnimationFrame(animation);
+        // }
+
+        spheres.forEach((sphere, index) => {
+            sphere.position.z += -5;  
+            // console.log(sphere.position.z - robot.position.z);
+                if(sphere.position.z - robot.position.z < 5){
+                        if(sphere.position.y > robot.position.y ){
+                            scene.remove(sphere);
+                            document.getElementById("modal-lose").style.display = "block";
+                            cancelAnimationFrame(animation);
+                        }   
+                }
+
+                // if(sphere.position.z < robot.position.z-20 ){
+                //     scene.remove(sphere);
+                //     spheres.splice(index,1);
+                //     console.log(spheres);
+                //     count++;
+                //     console.log("count", count);
+                //     var elem = document.getElementById("score");
+                //     elem.innerHTML = count;
+                // }
+
+                if(robot.position.y - sphere.position.y >= 5){
+                    if(sphere.position.z < robot.position.z-20 ){
+                        scene.remove(sphere);
+                        spheres.splice(index,1);
+                        console.log(spheres);
+                        count++;
+                        console.log("count", count);
+                        var elem = document.getElementById("score");
+                        elem.innerHTML = count;
+                    }
+                }
+        });
+
+        if(spheres[spheres.length-1].position.z <100){
+            create_sphere();
+            
         }
-        if(sphere.position.z - bullet.position.z <=1){
-            if((sphere.position.x + 10) >= bullet.position.x && (sphere.position.x - 10) <= bullet.position.x){
-                scene.remove(sphere)
-                count++;
-                var elem = document.getElementById("score");
-                elem.innerHTML = count;
-                create_sphere();
-                scene.remove(bullet);
-            }
-        }
+       
+
+        // if(sphere.position.z <= 100){
+        //     scene.add(sphere);
+
+        // }
     }
 
 
@@ -127,43 +111,6 @@ var app = function(){
             robot.position.x = -30;
         }
     }
-
-
-    // var create_crate = function() {
-    //     var geometry = new THREE.BoxGeometry(1,1,1);
-    //     var crate_texture = new THREE.TextureLoader().load("./data/textures/crate0_diffuse.png");
-    //     var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
-    //     var nomal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
-    //     var material = new THREE.MeshPhongMaterial({map: crate_texture, bumpMap: bump_map_texture, normalMap: nomal_map_texture});
-    //     crate = new THREE.Mesh(geometry,material);
-    //     crate.position.set(-20,0,-10)
-    //     scene.add(crate);
-    // }
-
-    // var create_sphere = function() {
-    //     var geometry = new THREE.SphereGeometry(3,100,100);
-        
-    //     var front_texture = "./data/textures/skybox/arid2_ft.jpg";
-    //     var back_texture = "./data/textures/skybox/arid2_bk.jpg";
-    //     var up_texture = "./data/textures/skybox/arid2_up.jpg";
-    //     var down_texture = "./data/textures/skybox/arid2_dn.jpg";
-    //     var right_texture = "./data/textures/skybox/arid2_rt.jpg";
-    //     var left_texture = "./data/textures/skybox/arid2_lf.jpg";
-
-    //     var loader = new THREE.CubeTextureLoader();
-
-    //     var textureCube = loader.load( [
-    //         front_texture, back_texture,
-    //         up_texture, down_texture,
-    //         right_texture, left_texture
-    //     ]);
-
-    //     var material = new THREE.MeshBasicMaterial({envMap:textureCube});
-    //     sphere = new THREE.Mesh(geometry,material);
-    //     sphere.position.set(0,0,0);
-    //     sphere.encoding = THREE.sRGBEncoding;
-    //     scene.add(sphere);
-    // }
 
     var create_skybox = function(){
         var geometry = new THREE.BoxGeometry(10000,10000,10000);
@@ -190,68 +137,8 @@ var app = function(){
         skybox.encoding = THREE.sRGBEncoding;
         scene.add(skybox);
     }
-
-    // var create_skybox = function(){
-    //     var geometry = new THREE.SphereGeometry(10000,10000,10000);
-    //     textureEquirec = new THREE.TextureLoader().load('./data/image/sky2.jpg');
-    //     textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
-    //     textureEquirec.encoding = THREE.sRGBEncoding;
-
-    //     scene.background = textureEquirec;
-        
-    // }
-
-    // var meteor = function () {
-    //     // let material = new THREE.LineBasicMaterial({color: 0xffffff ,linewidth:1});
-
-    //     // let material = new THREE.LineDashedMaterial({color: 0xffffff ,linewidth:1,dashSize:1,gapSize:1});
-
-    //     // var material = new THREE.BoxGeometry(5,50,50);
-
-    //     // var geometry = new THREE.MeshBasicMaterial({color:0xffffff});
-
-    //     // // geometry.computeLineDistances();
-    //     // meteor = new THREE.Points(geometry,material);
-    //     // meteor.positioưn.set(0,0,0);
-
-    //     // scene.add(meteor);
-
-    //     var geometry = new THREE.Geometry();
-    //     var material = new THREE.PointsMaterial({
-    //         color: 0xffffff,
-    //     });
-    //     for(let i = 1; i<= 1000; i++){
-    //         let x = randomInRange(-25,25);
-    //         let y = randomInRange(-20,20);
-    //         let z = randomInRange(-20,20);
-    //         geometry.vertices.push(new THREE.Vector3(x,y,z));
-    //     }
-    //     meteor = new THREE.Mesh(geometry,material);
-    //     meteor.position.set(0,0,0);
-
-    //     scene.add(meteor);
-
-    // };
-    var meteor = function () {
-        // let material = new THREE.LineBasicMaterial({color: 0xffffff ,linewidth:1});
-
-        // let material = new THREE.LineDashedMaterial({color: 0xffffff ,linewidth:1,dashSize:1,gapSize:1});
-
-        // let material = new THREE.MeshNormalMaterial({transparent: true,});
-
-        // let geometry = new THREE.BoxGeometry(5,5,5000,5);
-
-        // for(let i = 1; i<= 1000; i++){
-        //     let x = randomInRange(2000,20);
-        //     let y = randomInRange(20,20);
-        //     let z = randomInRange(-20,20);
-        //     geometry.vertices.push(new THREE.Vector3(x,y,z));
-        // }
-
-        // // geometry.computeLineDistances();
-        // particles = new THREE.Mesh(geometry,material);
-
-        // scene.add(particles);
+    
+    var create_meteor = function () {
 
         var material = new THREE.MeshBasicMaterial({
             color:Math.random()*0xfff4bd
@@ -283,27 +170,20 @@ var app = function(){
                 
                 ground.position.y=30;
                 ground.position.x = 0;
-                // ground.position.z = 5000;
                 ground.position.z = 5000;
                 ground.position.y = -3;
                 ground.rotation.z = 3.2;
                 ground.rotation.z = 2*Math.PI/2;
                 ground.scale.y += window.innerWidth;
-                // ground.scale.y += window.innerWidth;    
-                // ground.scale.x += -500000;
-                // ground.position.x-= (size.x * 100000);
-                ground.scale.set(0.09,1,0.05);
-                // ground.wrapS = THREE.RepeatWrapping;
-                // ground.wrapT = THREE.RepeatWrapping;
-                // ground.repeat.set( 3, 900 );
+                ground.scale.set(0.15,1,0.05);
                 scene.add(ground);
 
             },
             function(xhr){
-                console.log("the car model is" + (xhr.loaded / xhr.total * 100) + '% loaded');
+                // console.log("the car model is" + (xhr.loaded / xhr.total * 100) + '% loaded');
             },
             function(error){
-                console.log('An error happened ' + error);
+                // console.log('An error happened ' + error);
             },  
         )
         
@@ -313,29 +193,29 @@ var app = function(){
         modelLoader = new THREE.GLTFLoader();
         modelLoader.load('./data/model/RobotExpressive/RobotExpressive.glb', function(gltf){
             robot = gltf.scene;
-            // plane.rotation.y = MY_LIBS.degToRad(90);
+
             robot.scale.set(5,5,5);
-            // plane.position.x = 6050;
             robot.position.z = 0;
             robot.position.x = 0;
             scene.add(robot);
+
             mixerRobot = new THREE.AnimationMixer(robot);
             // for(let i = 0; i <= gltf.animations.length; i++ ){
-            mixerRobot.clipAction( gltf.animations[6] ).play();
+            callanimation1 = mixerRobot.clipAction( gltf.animations[10] );
+            callanimation2 = mixerRobot.clipAction( gltf.animations[6] );
+            callanimation3 = mixerRobot.clipAction( gltf.animations[3] );
+            callanimation = [callanimation1,callanimation2,callanimation3];
             // }
             mixers.push(mixerRobot);
         });
     }
 
-
-    // var a=function(meteor){
-    //     meteor.position.z += 50;
-    // }
-
     var onDocumentKeyDown = function(e){
-        console.log("the current key:"+e.keyCode);
+        // console.log("the current key:"+e.keyCode);
         switch(e.keyCode){
             case 68:
+                runModel();
+
                 robot.position.x += -1;
                 robot.rotation.y += -1;
 
@@ -345,6 +225,8 @@ var app = function(){
                 break;
                 
             case 65:
+                runModel();
+                
                 robot.position.x += 1;
                 robot.rotation.y += 1;
 
@@ -354,16 +236,70 @@ var app = function(){
                 break;
 
             case 87: 
-                robot.rotation.y = 0;
-                break;
+                runModel();
 
-            case 32:
-                update_bullet();
+                setup();
                 break;
             
             default:
-                console.log("the current key:"+e.keyCode);
+                // console.log("the current key:"+e.keyCode);
         }
+    }
+
+    var setup = function(){
+        robot.position.y = 20;
+        if(robot.position.z <= 20){
+            var interval_obj = setInterval(function(){
+                robot.position.y = 0;
+                clearInterval(interval_obj);
+            }, 500);
+        }
+    }
+
+    var runModel = function(){
+        
+        if(robot.rotation.y >= 1){
+            robot.position.x += 0.3;
+            callanimation[1].play();
+            callanimation[0].stop();
+            callanimation[2].stop();
+        }   
+        if(robot.rotation.y <= -1){
+            robot.position.x -= 0.3;
+            callanimation[1].play();
+            callanimation[0].stop();
+            callanimation[2].stop();
+        }
+        if(robot.rotation.y == 0){
+            callanimation[1].stop();
+            callanimation[0].play();
+        }
+
+        if(robot.position.y >= 17){
+            robot.rotation.y = 0;
+            robot.position.x += 0;
+            callanimation[2].play();
+            callanimation[0].stop();
+        }
+        if(robot.position.y <= 0){
+            callanimation[2].stop();
+        }
+    }
+
+
+    var reload = function(){
+        
+        spheres.forEach(sphere => {
+            scene.remove(sphere);
+        });
+        spheres = [];
+        create_sphere();
+
+        
+        ground.position.z = 5000;
+        count = 0;
+        var elem = document.getElementById("score");
+        elem.innerHTML = count;
     }
 
 
@@ -412,7 +348,7 @@ var app = function(){
        
         
         create_sphere();
-        create_bullet();
+        // create_bullet();
         // create_plane();
         create_ground();
 
@@ -423,9 +359,9 @@ var app = function(){
         
 
 
-        document.addEventListener("keydown", onDocumentKeyDown,true);
-        
-
+        // document.addEventListener("keydown", onDocumentKeyDown,false);
+        // document.addEventListener("keypress", onDocumentKeyDown,false);
+        document.addEventListener("keyup", onDocumentKeyDown,false);
 
         renderer = new THREE.WebGLRenderer();
         renderer.setPixelRatio( window.devicePixelRatio );
@@ -448,10 +384,6 @@ var app = function(){
             meteor.position.z += 15;
     }
 
-    // var update_crates = function(crate){
-    //     crate.position.z -= 1;
-    // }
-
     var animate = function(){
         const delta = clock.getDelta();
         for(let i =0; i< mixers.length; i++)
@@ -460,28 +392,30 @@ var app = function(){
 
     // main animation loop - calls every 50-60ms.
     var mainLoop = function(){
-        
+
+
+        // console.log("vi tri z" + sphere.position.z);
+        // console.log("vi tri z ground" + ground.position.z);
+        // console.log("so vat can" + spheres.length);
         animate();
-        
+        callanimation[0].play();
 
         let rand = Math.random();
         if(rand < 100){
-            meteor();
+            create_meteor();
         }
 
         meteors.forEach(update_meteor);
 
-
-        // plane.rotation.x += -2;
-
         
-        sphere.rotation.y += MY_LIBS.degToRad(3);
+        sphere.rotation.x -= MY_LIBS.degToRad(3);
 
-        requestAnimationFrame(mainLoop);
+        animation = requestAnimationFrame(mainLoop);
         ground.position.z += -0.5;
+        runModel();
         random_sphere();
         limit_ground();
-        position_bullet();
+        // position_bullet();
         // update_bullet();
         // random_plane();
         renderer.render(scene,camera);
@@ -489,6 +423,11 @@ var app = function(){
 
 
     init_app();
-    mainLoop();
+    document.getElementById("starbutton").addEventListener("click", function() {
+        // sphere.position.z  = 500;  
+        reload();
+        mainLoop();
+    });
+   
     // animate();
 }
