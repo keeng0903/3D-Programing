@@ -5,8 +5,8 @@ var app = function(){
     var meteors = [];
     var mixers = [];
 
-    var sphere;
-    var spheres = [];
+    var box1;
+    var box1s = [];
     
     var box2;
     var box2s = [];
@@ -34,34 +34,29 @@ var app = function(){
         return Math.random()*(max-min)+min;
     }
 
-    var create_sphere = function(){
+    var create_box1 = function(){
         var geometry = new THREE.BoxGeometry(25, 50, 20);
         var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
-        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
         var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
-        sphere = new THREE.Mesh(geometry,material);
-        // crate.position.set(0,10,0);
-        sphere.position.x = 0;
-        sphere.position.y = 30;
-        sphere.position.z = 2000;
-        // sphere.rotation.z = MY_LIBS.degToRad(90);
-        // sphere.scale.y = randomInRange(1, 5);
-        // crate.scale.z = randomInRange(1, 5);
-        scene.add(sphere);
 
-        sphere.name ="sphere";
-        spheres.push(sphere);
+        box1 = new THREE.Mesh(geometry,material);
+        
+        box1.position.x = 0;
+        box1.position.y = 30;
+        box1.position.z = 2000;
+        scene.add(box1);
+
+        box1.name ="box1";
+        box1s.push(box1);
     };  
 
     var create_box4 = function(){
         var geometry = new THREE.BoxGeometry(20, 15 , 20);
         var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
-        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
         var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+
         box4 = new THREE.Mesh(geometry,material);
-        // crate.position.set(0,10,0);
+
         box4.position.x = 0;
         box4.position.y = 15;
         box4.position.z = 2000;
@@ -74,18 +69,13 @@ var app = function(){
     var create_box2 = function(){
         var geometry = new THREE.BoxGeometry(20, 15 , 20);
         var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
-        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
         var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+
         box2 = new THREE.Mesh(geometry,material);
-        // crate.position.set(0,10,0);
+
         box2.position.x = 25;
         box2.position.y = 15;
         box2.position.z = 1500;
-        // box2.scale.x = -2;
-        // sphere.rotation.z = MY_LIBS.degToRad(90);
-        // sphere.scale.y = randomInRange(1, 5);
-        // crate.scale.z = randomInRange(1, 5);
         scene.add(box2);
 
         box2.name ="box2";
@@ -95,18 +85,13 @@ var app = function(){
     var create_box5 = function(){
         var geometry = new THREE.BoxGeometry(25, 50, 20);
         var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
-        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
         var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+
         box5 = new THREE.Mesh(geometry,material);
-        // crate.position.set(0,10,0);
+
         box5.position.x = 25;
         box5.position.y = 30;
         box5.position.z = 1500;
-        // box2.scale.x = -2;
-        // sphere.rotation.z = MY_LIBS.degToRad(90);
-        // sphere.scale.y = randomInRange(1, 5);
-        // crate.scale.z = randomInRange(1, 5);
         scene.add(box5);
 
         box5.name ="box5";
@@ -116,11 +101,10 @@ var app = function(){
     var create_box3 = function(){
         var geometry = new THREE.BoxGeometry(20, 15 , 20);
         var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
-        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
         var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+
         box3 = new THREE.Mesh(geometry,material);
-        // crate.position.set(0,10,0);
+        
         box3.position.x = -29;
         box3.position.y = 15;
         box3.position.z = 2500;
@@ -133,11 +117,10 @@ var app = function(){
     var create_box6 = function(){
         var geometry = new THREE.BoxGeometry(25, 50, 20);
         var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
-        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
         var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+
         box6 = new THREE.Mesh(geometry,material);
-        // crate.position.set(0,10,0);
+
         box6.position.x = -29;
         box6.position.y = 30;
         box6.position.z = 2500;
@@ -147,16 +130,16 @@ var app = function(){
         box6s.push(box6);
     };  
 
-    var random_sphere = function(){
+    var random_box1 = function(){
 
-        spheres.forEach((sphere, index) => {
-            sphere.position.z += -5;  
+        box1s.forEach((box1, index) => {
+            box1.position.z += -5;  
             // sphere.rotation.x -= MY_LIBS.degToRad(3);
-            console.log(sphere.position.z - robot.position.z);
-                if(sphere.position.z - robot.position.z < 5){
-                        if(sphere.position.y > robot.position.y ){
-                            if(sphere.position.x + 15 > robot.position.x && sphere.position.x - 15 < robot.position.x){   
-                                scene.remove(sphere);
+            console.log(box1.position.z - robot.position.z);
+                if(box1.position.z - robot.position.z < 5){
+                        if(box1.position.y > robot.position.y ){
+                            if(box1.position.x + 15 > robot.position.x && box1.position.x - 15 < robot.position.x){   
+                                scene.remove(box1);
                                 document.getElementById("modal-lose").style.display = "block";
                                 document.getElementById("score-main").style.display = "none";
                                 cancelAnimationFrame(animation);
@@ -164,11 +147,11 @@ var app = function(){
                         }   
                 }
 
-                if(sphere.position.x < robot.position.x || sphere.position.x > robot.position.x){
-                        if(sphere.position.z < robot.position.z -20 ){
-                            scene.remove(sphere);
-                            spheres.splice(index,1);
-                            console.log(spheres);
+                if(box1.position.x < robot.position.x || box1.position.x > robot.position.x){
+                        if(box1.position.z < robot.position.z -20 ){
+                            scene.remove(box1);
+                            box1s.splice(index,1);
+                            console.log(box1s);
                             count++;
                             console.log("count", count);
                             var elem = document.getElementById("score");
@@ -185,11 +168,11 @@ var app = function(){
                     cancelAnimationFrame(animation);
                 }
                 if(count >5){
-                    sphere.position.z += -1;
+                    box1.position.z += -1;
                 }
         });
-        if(spheres[spheres.length-1].position.z <1000){
-            create_sphere();
+        if(box1s[box1s.length-1].position.z <1000){
+            create_box1();
         }
     }
 
@@ -197,7 +180,6 @@ var app = function(){
 
         box2s.forEach((box2, index) => {
             box2.position.z += -5;  
-            // sphere.rotation.x -= MY_LIBS.degToRad(3);
             console.log(box2.position.z - robot.position.z);
                 if(box2.position.z - robot.position.z < 5){
                     if(box2.position.y > robot.position.y ){
@@ -244,7 +226,6 @@ var app = function(){
 
         box5s.forEach((box5, index) => {
             box5.position.z += -5;  
-            // sphere.rotation.x -= MY_LIBS.degToRad(3);
             console.log(box5.position.z - robot.position.z);
                 if(box5.position.z - robot.position.z < 5){
                     if(box5.position.y > robot.position.y ){
@@ -378,7 +359,6 @@ var app = function(){
 
         box4s.forEach((box4, index) => {
             box4.position.z += -5;  
-            // sphere.rotation.x -= MY_LIBS.degToRad(3);
             console.log(box4.position.z - robot.position.z);
                 if(box4.position.z - robot.position.z < 5){
                         if(box4.position.y > robot.position.y ){
@@ -482,6 +462,7 @@ var app = function(){
         meteors.push(meteor);
     };
 
+    // create ground
     var create_ground = function(){
         var gltfLoader = new THREE.GLTFLoader();
         
@@ -512,7 +493,7 @@ var app = function(){
         )
         
     }
-
+    // create robot
     var create_robot = function(){
         modelLoader = new THREE.GLTFLoader();
         modelLoader.load('./data/model/RobotExpressive/RobotExpressive.glb', function(gltf){
@@ -535,7 +516,7 @@ var app = function(){
     }
 
     var onDocumentKeyDown = function(e){
-        // console.log("the current key:"+e.keyCode);
+
         switch(e.keyCode){
             case 68:
                 runModel();
@@ -566,7 +547,6 @@ var app = function(){
                 break;
             
             default:
-                // console.log("the current key:"+e.keyCode);
         }
     }
 
@@ -613,11 +593,11 @@ var app = function(){
 
     var reload = function(){
         
-        spheres.forEach(sphere => {
-            scene.remove(sphere);
+        box1s.forEach(box1 => {
+            scene.remove(box1);
         });
-        spheres = [];
-        create_sphere();
+        box1s = [];
+        create_box1();
 
         box2s.forEach(box2 => {
             scene.remove(box2);
@@ -668,22 +648,30 @@ var app = function(){
     var init_app = function() {
         // 1. create the scene
         scene = new THREE.Scene();
-        
-        // scene.fog = new THREE.Fog(0xFFFFFF, 100, 100);
-        // create background
-        // scene.background = new THREE.Color(0xffffff);
-        // scene.background = new THREE.TextureLoader().load("data/textures/people.jpg");
 
-        // 2. create an locate the camera
+        // 2. create camera
         var canvasWidth = window.innerWidth, canvasHeight = window.innerHeight;
         var feilfOfViewY = 60, aspectRatio = canvasWidth/ canvasHeight, near=1.0, far=100000.0;
         camera = new THREE.PerspectiveCamera(feilfOfViewY, aspectRatio, near, far);
-        // camera.position.x = 20;
-        // camera.position.y = -10;
 
         camera.position.set( 0, 30, -40);
         camera.rotation.y += 3.1;
         camera.rotation.x = 0.3;
+
+        // create an AudioListener and add it to the camera
+        const listener = new THREE.AudioListener();
+        camera.add( listener );
+    
+        // create a global audio source
+        const sound = new THREE.Audio( listener );
+
+        const audioLoader = new THREE.AudioLoader();
+        audioLoader.load( 'data/audio/audio.mp3', function( buffer ) {
+            sound.setBuffer( buffer );
+            sound.setLoop(true);
+            sound.setVolume(0.1);
+            sound.play();
+        });
 
         
         // 3.create and locate the objects on the scene
@@ -697,55 +685,33 @@ var app = function(){
 
         const keyLight = new THREE.DirectionalLight(0xffffff, 1);
         keyLight.position.set(0,10,-10);
-        // keyLight.rotation.y = 100;
         scene.add(keyLight);
+
         const fillLight = new THREE.DirectionalLight(0xffffff, 1);
         fillLight.position.set(10, 10, -5);
         scene.add(fillLight);
-        // const backLight = new THREE.DirectionalLight(0xffffff, 1);
-        // backLight.position.set(-10, 10,5);
-        // backLight.rotation.x=20
-        // scene.add(backLight);
 
-       
-        
-        create_sphere();
-        // create_bullet();
-        // create_plane();
         create_ground();
-
         create_skybox();
         create_robot();
 
+        create_box1();
         create_box2();
         create_box3();
         create_box4();
         create_box5();
         create_box6();
 
-        // meteor();
-        
 
-
-        // document.addEventListener("keydown", onDocumentKeyDown,false);
-        // document.addEventListener("keypress", onDocumentKeyDown,false);
         document.addEventListener("keyup", onDocumentKeyDown,false);
 
+
+        // 4. create renderer
         renderer = new THREE.WebGLRenderer();
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.setSize( window.innerWidth, window.innerHeight );
-        // renderer.outputEncoding = THREE.sRGBEncoding;
         document.body.appendChild( renderer.domElement );
 
-        // controls = new THREE.OrbitControls(camera,renderer.domElement );
-
-        
-
-        // controls.enableDamping = true;
-        // controls.campingFactor = 0.25;
-        // console.log(camera.position.set());
-        // controls.update();
-        // renderer.render( scene, camera );
     };
 
     var update_meteor = function(meteor){
@@ -758,13 +724,7 @@ var app = function(){
         mixers[i].update(delta);
     }
 
-    // main animation loop - calls every 50-60ms.
     var mainLoop = function(){
-
-
-        // console.log("vi tri z" + sphere.position.z);
-        // console.log("vi tri z ground" + ground.position.z);
-        // console.log("so vat can" + spheres.length);
         animate();
         callanimation[0].play();
 
@@ -781,26 +741,22 @@ var app = function(){
         animation = requestAnimationFrame(mainLoop);
         ground.position.z += -0.5;
         runModel();
-        random_sphere();
+        random_box1();
         random_box2();
         random_box3();
         random_box4();
         random_box5();
         random_box6();
+
+
         limit_ground();
-        // position_bullet();
-        // update_bullet();
-        // random_plane();
         renderer.render(scene,camera);
     };
 
 
     init_app();
     document.getElementById("starbutton").addEventListener("click", function() {
-        // sphere.position.z  = 500;  
         reload();
         mainLoop();
     });
-   
-    // animate();
 }
