@@ -51,15 +51,16 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Luật chơi!</h5>
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Rule!</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <ul>
-                            <li>Di chuyển trái nhấn 'A'</li>
-                            <li>Di chuyển phải nhấn 'D'</li>
+                            <li>Move left press 'A'</li>
+                            <li>Move right press 'D'</li>
+                            <li>Jump up hit 'W'</li>
                             <!-- <li>Di chuyển trái nhấn 'A'</li>
                             <li>Di chuyển trái nhấn 'A'</li> -->
                         </ul>
@@ -75,8 +76,19 @@
             <div class="custom-tryagain">
                 <img class="pt-5 logo-game" src="data/image/logo-game.png" alt="">
                 <img src="data/image/gameover.png" alt="">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores quidem fugiat unde enim omnis repudiandae itaque. Delectus ab ex praesentium et distinctio. Labore, vero. Rem rerum amet sequi qui esse!</p>
+                <p class="scrore-2"><span id="score-2">0</span>/100</p>
+                <p class="text-gameover">To play the abbreviation texting game, all you have to do is pick a category, mention an abbreviation or acronym; then your opponent has to tell you the correct meaning of the abbreviation.</p>
                 <button  class="start-btn start-btn green" onclick="tryagain()">Try Again</button>
+            </div>
+        </div>
+
+        <div id="modal-winner" style="display: none;" >
+            <div class="custom-tryagain">
+                <img class="pt-5 logo-game" src="data/image/logo-game.png" alt="">
+                <img src="data/image/gamewinner.png" alt="">
+                <p class="scrore-2">100/100</p>
+                <p class="text-gameover">To play the abbreviation texting game, all you have to do is pick a category, mention an abbreviation or acronym; then your opponent has to tell you the correct meaning of the abbreviation.</p>
+                <button  class="start-btn start-btn green" onclick="tryagain()">Play Again</button>
             </div>
         </div>
 
@@ -104,6 +116,7 @@
                 loading.style.display ="none";
                 document.getElementById("score-main").style.display = "block";
                 document.getElementById("modal-lose").style.display = "none";
+                document.getElementById("modal-winner").style.display = "none";
             }
 
             function tryagain() {

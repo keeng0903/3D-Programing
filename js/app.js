@@ -4,8 +4,25 @@ var app = function(){
     var scene, camera, renderer;
     var meteors = [];
     var mixers = [];
+
     var sphere;
     var spheres = [];
+    
+    var box2;
+    var box2s = [];
+
+    var box3;
+    var box3s = [];
+
+    var box4;
+    var box4s = [];
+
+    var box5;
+    var box5s = [];
+
+    var box6;
+    var box6s = [];
+
     var count = 0;
     var animation;
     var callanimation = [];
@@ -18,97 +35,404 @@ var app = function(){
     }
 
     var create_sphere = function(){
-        var geometry = new THREE.CylinderGeometry(5, 5, 60, 50);
-        var crate_texture = new THREE.TextureLoader().load("./data/image/dolar.jpg");
+        var geometry = new THREE.BoxGeometry(25, 50, 20);
+        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
         // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
         // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
-        var material = new THREE.MeshPhongMaterial({map:crate_texture});
+        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
         sphere = new THREE.Mesh(geometry,material);
         // crate.position.set(0,10,0);
         sphere.position.x = 0;
-        sphere.position.y = 15;
-        sphere.position.z = 500;
-        sphere.rotation.z = MY_LIBS.degToRad(90);
+        sphere.position.y = 30;
+        sphere.position.z = 2000;
+        // sphere.rotation.z = MY_LIBS.degToRad(90);
         // sphere.scale.y = randomInRange(1, 5);
         // crate.scale.z = randomInRange(1, 5);
         scene.add(sphere);
 
         sphere.name ="sphere";
         spheres.push(sphere);
-    };
+    };  
 
-    var random_sphere = function(sphere){
-        
-         
-        
-        // if(sphere.position.z - robot.position.z <= 1){
-        //     if((sphere.position.x + 10) >= robot.position.x && (sphere.position.x - 10) <= robot.position.x){
-        //         if(scene.remove(sphere)){
-        //             count++;
-        //             var elem = document.getElementById("score");
-        //             elem.innerHTML = count;
-        //         }
-        //         create_sphere();
-        //     }
-        // }
-        // if(sphere.position.z <= -10){
-        //     document.getElementById("modal-lose").style.display = "block";
-        //     cancelAnimationFrame(animation);
-        // }
+    var create_box4 = function(){
+        var geometry = new THREE.BoxGeometry(20, 15 , 20);
+        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
+        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
+        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
+        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+        box4 = new THREE.Mesh(geometry,material);
+        // crate.position.set(0,10,0);
+        box4.position.x = 0;
+        box4.position.y = 15;
+        box4.position.z = 2000;
+        scene.add(box4);
+
+        box4.name ="box4";
+        box4s.push(box4);
+    };  
+
+    var create_box2 = function(){
+        var geometry = new THREE.BoxGeometry(20, 15 , 20);
+        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
+        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
+        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
+        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+        box2 = new THREE.Mesh(geometry,material);
+        // crate.position.set(0,10,0);
+        box2.position.x = 25;
+        box2.position.y = 15;
+        box2.position.z = 1500;
+        // box2.scale.x = -2;
+        // sphere.rotation.z = MY_LIBS.degToRad(90);
+        // sphere.scale.y = randomInRange(1, 5);
+        // crate.scale.z = randomInRange(1, 5);
+        scene.add(box2);
+
+        box2.name ="box2";
+        box2s.push(box2);
+    };  
+
+    var create_box5 = function(){
+        var geometry = new THREE.BoxGeometry(25, 50, 20);
+        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
+        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
+        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
+        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+        box5 = new THREE.Mesh(geometry,material);
+        // crate.position.set(0,10,0);
+        box5.position.x = 25;
+        box5.position.y = 30;
+        box5.position.z = 1500;
+        // box2.scale.x = -2;
+        // sphere.rotation.z = MY_LIBS.degToRad(90);
+        // sphere.scale.y = randomInRange(1, 5);
+        // crate.scale.z = randomInRange(1, 5);
+        scene.add(box5);
+
+        box5.name ="box5";
+        box5s.push(box5);
+    };  
+
+    var create_box3 = function(){
+        var geometry = new THREE.BoxGeometry(20, 15 , 20);
+        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
+        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
+        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
+        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+        box3 = new THREE.Mesh(geometry,material);
+        // crate.position.set(0,10,0);
+        box3.position.x = -29;
+        box3.position.y = 15;
+        box3.position.z = 2500;
+        scene.add(box3);
+
+        box3.name ="box3";
+        box3s.push(box3);
+    };  
+
+    var create_box6 = function(){
+        var geometry = new THREE.BoxGeometry(25, 50, 20);
+        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
+        // var bump_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_bump.png");
+        // var normal_map_texture = new THREE.TextureLoader().load("./data/textures/crate0_normal.png");
+        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+        box6 = new THREE.Mesh(geometry,material);
+        // crate.position.set(0,10,0);
+        box6.position.x = -29;
+        box6.position.y = 30;
+        box6.position.z = 2500;
+        scene.add(box6);
+
+        box6.name ="box6";
+        box6s.push(box6);
+    };  
+
+    var random_sphere = function(){
 
         spheres.forEach((sphere, index) => {
             sphere.position.z += -5;  
-            // console.log(sphere.position.z - robot.position.z);
+            // sphere.rotation.x -= MY_LIBS.degToRad(3);
+            console.log(sphere.position.z - robot.position.z);
                 if(sphere.position.z - robot.position.z < 5){
                         if(sphere.position.y > robot.position.y ){
-                            scene.remove(sphere);
-                            document.getElementById("modal-lose").style.display = "block";
-                            cancelAnimationFrame(animation);
+                            if(sphere.position.x + 15 > robot.position.x && sphere.position.x - 15 < robot.position.x){   
+                                scene.remove(sphere);
+                                document.getElementById("modal-lose").style.display = "block";
+                                document.getElementById("score-main").style.display = "none";
+                                cancelAnimationFrame(animation);
+                            }
                         }   
                 }
 
-                // if(sphere.position.z < robot.position.z-20 ){
-                //     scene.remove(sphere);
-                //     spheres.splice(index,1);
-                //     console.log(spheres);
-                //     count++;
-                //     console.log("count", count);
-                //     var elem = document.getElementById("score");
-                //     elem.innerHTML = count;
-                // }
-
-                if(robot.position.y - sphere.position.y >= 5){
-                    if(sphere.position.z < robot.position.z-20 ){
-                        scene.remove(sphere);
-                        spheres.splice(index,1);
-                        console.log(spheres);
-                        count++;
-                        console.log("count", count);
-                        var elem = document.getElementById("score");
-                        elem.innerHTML = count;
+                if(sphere.position.x < robot.position.x || sphere.position.x > robot.position.x){
+                        if(sphere.position.z < robot.position.z -20 ){
+                            scene.remove(sphere);
+                            spheres.splice(index,1);
+                            console.log(spheres);
+                            count++;
+                            console.log("count", count);
+                            var elem = document.getElementById("score");
+                            elem.innerHTML = count;
+                            var elem2 = document.getElementById("score-2");
+                            elem2.innerHTML = count;
                     }
+                }
+
+
+                if(count >= 100){
+                    document.getElementById("modal-winner").style.display = "block";
+                    document.getElementById("score-main").style.display = "none";
+                    cancelAnimationFrame(animation);
+                }
+                if(count >5){
+                    sphere.position.z += -1;
+                }
+        });
+        if(spheres[spheres.length-1].position.z <1000){
+            create_sphere();
+        }
+    }
+
+    var random_box2 = function(){
+
+        box2s.forEach((box2, index) => {
+            box2.position.z += -5;  
+            // sphere.rotation.x -= MY_LIBS.degToRad(3);
+            console.log(box2.position.z - robot.position.z);
+                if(box2.position.z - robot.position.z < 5){
+                    if(box2.position.y > robot.position.y ){
+                        if(box2.position.x - 15 < robot.position.x){   
+                            scene.remove(box2);
+                            document.getElementById("modal-lose").style.display = "block";
+                            document.getElementById("score-main").style.display = "none";
+                            cancelAnimationFrame(animation);
+                        }
+                    }
+                }
+
+                if(box2.position.x < robot.position.x || box2.position.x > robot.position.x){
+                        if(box2.position.z < robot.position.z -20 ){
+                            scene.remove(box2);
+                            box2s.splice(index,1);
+                            console.log(box2s);
+                            count++;
+                            console.log("count", count);
+                            var elem = document.getElementById("score");
+                            elem.innerHTML = count;
+                            var elem2 = document.getElementById("score-2");
+                            elem2.innerHTML = count;
+                    }
+                }
+
+
+                if(count >= 100){
+                    document.getElementById("modal-winner").style.display = "block";
+                    document.getElementById("score-main").style.display = "none";
+                    cancelAnimationFrame(animation);
+                }
+
+                if(count >5){
+                    box2.position.z += -1;
+                }
+        });
+        if(box2s[box2s.length-1].position.z <1000){
+            create_box2();
+        }
+    }
+
+    var random_box5 = function(){
+
+        box5s.forEach((box5, index) => {
+            box5.position.z += -5;  
+            // sphere.rotation.x -= MY_LIBS.degToRad(3);
+            console.log(box5.position.z - robot.position.z);
+                if(box5.position.z - robot.position.z < 5){
+                    if(box5.position.y > robot.position.y ){
+                        if(box5.position.x - 15 < robot.position.x){   
+                            scene.remove(box5);
+                            document.getElementById("modal-lose").style.display = "block";
+                            document.getElementById("score-main").style.display = "none";
+                            cancelAnimationFrame(animation);
+                        }
+                    }
+                }
+
+                if(box5.position.x < robot.position.x || box5.position.x > robot.position.x){
+                        if(box5.position.z < robot.position.z -20 ){
+                            scene.remove(box5);
+                            box5s.splice(index,1);
+                            count++;
+                            console.log("count", count);
+                            var elem = document.getElementById("score");
+                            elem.innerHTML = count;
+                            var elem2 = document.getElementById("score-2");
+                            elem2.innerHTML = count;
+                    }
+                }
+
+
+                if(count >= 100){
+                    document.getElementById("modal-winner").style.display = "block";
+                    document.getElementById("score-main").style.display = "none";
+                    cancelAnimationFrame(animation);
+                }
+
+                if(count >5){
+                    box5.position.z += -1;
+                }
+        });
+        if(box5s[box5s.length-1].position.z <500){
+            create_box5();
+        }
+    }
+
+    var random_box3 = function(){
+
+        box3s.forEach((box3, index) => {
+            box3.position.z += -5;  
+                if(box3.position.z - robot.position.z < 5){
+                    if(box3.position.y > robot.position.y ){
+                        if(box3.position.x + 15 > robot.position.x){   
+                            scene.remove(box3);
+                            document.getElementById("modal-lose").style.display = "block";
+                            document.getElementById("score-main").style.display = "none";
+                            cancelAnimationFrame(animation);
+                        }
+                    }
+                }
+
+                if(box3.position.x < robot.position.x || box3.position.x > robot.position.x){
+                        if(box3.position.z < robot.position.z -20 ){
+                            scene.remove(box3);
+                            box3s.splice(index,1);
+                            count++;
+                            console.log("count", count);
+                            var elem = document.getElementById("score");
+                            elem.innerHTML = count;
+                            var elem2 = document.getElementById("score-2");
+                            elem2.innerHTML = count;
+                    }
+                }
+
+
+                if(count >= 100){
+                    document.getElementById("modal-winner").style.display = "block";
+                    document.getElementById("score-main").style.display = "none";
+                    cancelAnimationFrame(animation);
+                }
+
+                if(count >5){
+                    box3.position.z += -1;
+                }
+        });
+        if(box3s[box3s.length-1].position.z <2000){
+            create_box3();
+        }
+    }
+
+    var random_box6 = function(){
+
+        box6s.forEach((box6, index) => {
+            box6.position.z += -5;  
+                if(box6.position.z - robot.position.z < 5){
+                    if(box6.position.y > robot.position.y ){
+                        if(box6.position.x + 15 > robot.position.x){   
+                            scene.remove(box6);
+                            document.getElementById("modal-lose").style.display = "block";
+                            document.getElementById("score-main").style.display = "none";
+                            cancelAnimationFrame(animation);
+                        }
+                    }
+                }
+
+                if(box6.position.x < robot.position.x || box6.position.x > robot.position.x){
+                        if(box6.position.z < robot.position.z -20 ){
+                            scene.remove(box6);
+                            box6s.splice(index,1);
+                            count++;
+                            console.log("count", count);
+                            var elem = document.getElementById("score");
+                            elem.innerHTML = count;
+                            var elem2 = document.getElementById("score-2");
+                            elem2.innerHTML = count;
+                    }
+                }
+
+
+                if(count >= 100){
+                    document.getElementById("modal-winner").style.display = "block";
+                    document.getElementById("score-main").style.display = "none";
+                    cancelAnimationFrame(animation);
+                }
+
+                if(count >5){
+                    box6.position.z += -1;
+                }
+        });
+        if(box6s[box6s.length-1].position.z <1500){
+            create_box6();
+        }
+    }
+
+    var random_box4 = function(){
+
+        box4s.forEach((box4, index) => {
+            box4.position.z += -5;  
+            // sphere.rotation.x -= MY_LIBS.degToRad(3);
+            console.log(box4.position.z - robot.position.z);
+                if(box4.position.z - robot.position.z < 5){
+                        if(box4.position.y > robot.position.y ){
+                            if(box4.position.x + 15 > robot.position.x && box4.position.x - 15 < robot.position.x){   
+                                scene.remove(box4);
+                                document.getElementById("modal-lose").style.display = "block";
+                                document.getElementById("score-main").style.display = "none";
+                                cancelAnimationFrame(animation);
+                            }
+                        }   
+                }
+
+                if(box4.position.x < robot.position.x || box4.position.x > robot.position.x){
+                        if(box4.position.z < robot.position.z -20 ){
+                            scene.remove(box4);
+                            box4s.splice(index,1);
+                            count++;
+                            console.log("count", count);
+                            var elem = document.getElementById("score");
+                            elem.innerHTML = count;
+                            var elem2 = document.getElementById("score-2");
+                            elem2.innerHTML = count;
+                    }
+                }
+
+
+                if(count >= 100){
+                    document.getElementById("modal-winner").style.display = "block";
+                    document.getElementById("score-main").style.display = "none";
+                    cancelAnimationFrame(animation);
+                }
+                if(count >5){
+                    box4.position.z += -1;
                 }
         });
 
-        if(spheres[spheres.length-1].position.z <100){
-            create_sphere();
-            
+        if(box4s[box4s.length-1].position.z < 500){
+            create_box4();
         }
-       
-
-        // if(sphere.position.z <= 100){
-        //     scene.add(sphere);
-
-        // }
     }
 
 
+    
+
+
+
+
+
     var limit_ground = function(){
-        if(robot.position.x >= 30){
-            robot.position.x = 30;
+        if(robot.position.x >= 29){
+            robot.position.x = 29;
         }
-        if(robot.position.x <= -30){
-            robot.position.x = -30;
+        if(robot.position.x <= -29){
+            robot.position.x = -29;
         }
     }
 
@@ -259,13 +583,13 @@ var app = function(){
     var runModel = function(){
         
         if(robot.rotation.y >= 1){
-            robot.position.x += 0.3;
+            robot.position.x += 0.5;
             callanimation[1].play();
             callanimation[0].stop();
             callanimation[2].stop();
         }   
         if(robot.rotation.y <= -1){
-            robot.position.x -= 0.3;
+            robot.position.x -= 0.5;
             callanimation[1].play();
             callanimation[0].stop();
             callanimation[2].stop();
@@ -295,11 +619,49 @@ var app = function(){
         spheres = [];
         create_sphere();
 
-        
+        box2s.forEach(box2 => {
+            scene.remove(box2);
+        });
+        box2s = [];
+        create_box2();
+
+        box3s.forEach(box3 => {
+            scene.remove(box3);
+        });
+        box3s = [];
+        create_box3();
+
+        box4s.forEach(box4 => {
+            scene.remove(box4);
+        });
+        box4s = [];
+        create_box4();
+
+        box5s.forEach(box5 => {
+            scene.remove(box5);
+        });
+        box5s = [];
+        create_box5();
+
+        box6s.forEach(box6 => {
+            scene.remove(box6);
+        });
+        box6s = [];
+        create_box6();
+
+        robot.position.x = 0;
+        robot.rotation.y = 0;
+
+
         ground.position.z = 5000;
         count = 0;
         var elem = document.getElementById("score");
         elem.innerHTML = count;
+
+        var elem2 = document.getElementById("score-2");
+        elem2.innerHTML = count;
+
+
     }
 
 
@@ -355,6 +717,12 @@ var app = function(){
         create_skybox();
         create_robot();
 
+        create_box2();
+        create_box3();
+        create_box4();
+        create_box5();
+        create_box6();
+
         // meteor();
         
 
@@ -408,12 +776,17 @@ var app = function(){
         meteors.forEach(update_meteor);
 
         
-        sphere.rotation.x -= MY_LIBS.degToRad(3);
+        // sphere.rotation.x -= MY_LIBS.degToRad(3);
 
         animation = requestAnimationFrame(mainLoop);
         ground.position.z += -0.5;
         runModel();
         random_sphere();
+        random_box2();
+        random_box3();
+        random_box4();
+        random_box5();
+        random_box6();
         limit_ground();
         // position_bullet();
         // update_bullet();
