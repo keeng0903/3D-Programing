@@ -36,8 +36,9 @@ var app = function(){
 
     var create_box1 = function(){
         var geometry = new THREE.BoxGeometry(25, 50, 20);
-        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+        var crate_texture = new THREE.TextureLoader().load("./data/textures/nion.jpg");
+
+        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x00e5ff});
 
         box1 = new THREE.Mesh(geometry,material);
         
@@ -52,8 +53,9 @@ var app = function(){
 
     var create_box4 = function(){
         var geometry = new THREE.BoxGeometry(20, 15 , 20);
-        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+        var crate_texture = new THREE.TextureLoader().load("./data/textures/nion.jpg");
+
+        var material = new THREE.MeshPhongMaterial({map:crate_texture});
 
         box4 = new THREE.Mesh(geometry,material);
 
@@ -68,8 +70,9 @@ var app = function(){
 
     var create_box2 = function(){
         var geometry = new THREE.BoxGeometry(20, 15 , 20);
-        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+        var crate_texture = new THREE.TextureLoader().load("./data/textures/nion.jpg");
+
+        var material = new THREE.MeshPhongMaterial({map:crate_texture});
 
         box2 = new THREE.Mesh(geometry,material);
 
@@ -84,8 +87,9 @@ var app = function(){
 
     var create_box5 = function(){
         var geometry = new THREE.BoxGeometry(25, 50, 20);
-        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+        var crate_texture = new THREE.TextureLoader().load("./data/textures/nion.jpg");
+
+        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x00e5ff});
 
         box5 = new THREE.Mesh(geometry,material);
 
@@ -100,12 +104,13 @@ var app = function(){
 
     var create_box3 = function(){
         var geometry = new THREE.BoxGeometry(20, 15 , 20);
-        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+        var crate_texture = new THREE.TextureLoader().load("./data/textures/nion.jpg");
+
+        var material = new THREE.MeshPhongMaterial({map:crate_texture});
 
         box3 = new THREE.Mesh(geometry,material);
         
-        box3.position.x = -29;
+        box3.position.x = -25;
         box3.position.y = 15;
         box3.position.z = 2500;
         scene.add(box3);
@@ -116,8 +121,9 @@ var app = function(){
 
     var create_box6 = function(){
         var geometry = new THREE.BoxGeometry(25, 50, 20);
-        var crate_texture = new THREE.TextureLoader().load("./data/image/meteorite.jpg");
-        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x2B4E79});
+        var crate_texture = new THREE.TextureLoader().load("./data/textures/nion.jpg");
+
+        var material = new THREE.MeshPhongMaterial({map:crate_texture, color: 0x00e5ff});
 
         box6 = new THREE.Mesh(geometry,material);
 
@@ -416,28 +422,93 @@ var app = function(){
         }
     }
 
+    // var create_skybox = function(){
+    //     var geometry = new THREE.BoxGeometry(10000,10000,10000);
+    //     var front_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy-X.png");
+    //     var back_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy-Y.png");
+    //     var up_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy-Z.png");
+    //     var down_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy+X.png");
+    //     var right_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy+Y.png");
+    //     var left_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy+Z.png");
+        
+    //     var materials = [];
+    //     materials.push(new THREE.MeshBasicMaterial({map:front_texture}));
+    //     materials.push(new THREE.MeshBasicMaterial({map:back_texture}));
+    //     materials.push(new THREE.MeshBasicMaterial({map:up_texture}));
+    //     materials.push(new THREE.MeshBasicMaterial({map:down_texture}));
+    //     materials.push(new THREE.MeshBasicMaterial({map:right_texture}));
+    //     materials.push(new THREE.MeshBasicMaterial({map:left_texture}));
+
+    //     for(var i=0;i<6;i++){
+    //         materials[i].side = THREE.BackSide;
+    //     }
+
+    //     skybox = new THREE.Mesh(geometry,materials);
+    //     skybox.encoding = THREE.sRGBEncoding;
+    //     scene.add(skybox);
+    // }
+
     var create_skybox = function(){
-        var geometry = new THREE.BoxGeometry(10000,10000,10000);
-        var front_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy-X.png");
-        var back_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy-Y.png");
-        var up_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy-Z.png");
-        var down_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy+X.png");
-        var right_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy+Y.png");
-        var left_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy+Z.png");
+        var geometry = new THREE.BoxGeometry(130,100,5000);
+        // var front_texture = new THREE.TextureLoader().load("./data/textures/city2-1.jpg");
+        // var back_texture = new THREE.TextureLoader().load("./data/textures/city2-2.jpg");
+        // // var up_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy-Z.png");
+        // var down_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy+X.png");
+        // // var right_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy+Y.png");
+        // // var left_texture = new THREE.TextureLoader().load("./data/textures/galaxy/galaxy+Z.png");
+
+        var front_texture = new THREE.TextureLoader().load("./data/textures/street9.jpg");
+
+        // front_texture.rotation.z = MY_LIBS.degToRad(90);
+        front_texture.wrapS = THREE.RepeatWrapping;
+        front_texture.wrapT = THREE.RepeatWrapping;
+        front_texture.repeat.set( 300, 1 );
+
+        var back_texture = new THREE.TextureLoader().load("./data/textures/street9.jpg");
+
+        back_texture.wrapS = THREE.RepeatWrapping;
+        back_texture.wrapT = THREE.RepeatWrapping;
+        back_texture.repeat.set( 200, 1 );
+
+        var up_texture = new THREE.TextureLoader().load("./data/textures/street8.jpg");
+
+        // up_texture.rotation.z = MY_LIBS.degToRad(90);
+        up_texture.wrapS = THREE.RepeatWrapping;
+        up_texture.wrapT = THREE.RepeatWrapping;
+        up_texture.repeat.set( 1, 200 );
+
+        var down_texture = new THREE.TextureLoader().load("./data/textures/street8.jpg");
+
+        // down_texture.rotation.z = MY_LIBS.degToRad(90);
+        // down_texture.wrapS = THREE.RepeatWrapping;
+        // down_texture.wrapT = THREE.RepeatWrapping;
+        // down_texture.repeat.set( 2, 1 );
+
+        var right_texture = new THREE.TextureLoader().load("./data/textures/street9.jpg");
+        // right_texture.wrapS = THREE.RepeatWrapping;
+        // right_texture.wrapT = THREE.RepeatWrapping;
+        // right_texture.repeat.set( 100, 1 );
+
+        var left_texture = new THREE.TextureLoader().load("./data/textures/street9.jpg");
+        left_texture.wrapS = THREE.RepeatWrapping;
+        left_texture.wrapT = THREE.RepeatWrapping;
+        left_texture.repeat.set( 1, 200 );
         
         var materials = [];
-        materials.push(new THREE.MeshBasicMaterial({map:front_texture}));
-        materials.push(new THREE.MeshBasicMaterial({map:back_texture}));
-        materials.push(new THREE.MeshBasicMaterial({map:up_texture}));
-        materials.push(new THREE.MeshBasicMaterial({map:down_texture}));
-        materials.push(new THREE.MeshBasicMaterial({map:right_texture}));
-        materials.push(new THREE.MeshBasicMaterial({map:left_texture}));
+        materials.push(new THREE.MeshBasicMaterial({map:front_texture ,color: 0x00e5ff}));
+        materials.push(new THREE.MeshBasicMaterial({map:back_texture ,color: 0x00e5ff}));
+        materials.push(new THREE.MeshBasicMaterial({map:up_texture ,color: 0x00e5ff}));
+        materials.push(new THREE.MeshBasicMaterial({map:down_texture ,color: 0x000000}));
+        materials.push(new THREE.MeshBasicMaterial({map:right_texture ,color: 0x00e5ff}));
+        materials.push(new THREE.MeshBasicMaterial({map:left_texture , color: 0x00e5ff }));
 
         for(var i=0;i<6;i++){
             materials[i].side = THREE.BackSide;
         }
 
         skybox = new THREE.Mesh(geometry,materials);
+
+        skybox.position.y = 49;
         skybox.encoding = THREE.sRGBEncoding;
         scene.add(skybox);
     }
@@ -446,16 +517,17 @@ var app = function(){
 
         var material = new THREE.MeshBasicMaterial({
             color:Math.random()*0xfff4bd
+            // color: 0xff9500
           });
           
         
           // Cube  
-        var geometry = new THREE.BoxGeometry(5, 5, 500,5);
+        var geometry = new THREE.SphereGeometry(5,20,20);
 
         var meteor = new THREE.Mesh(geometry,material);
-        meteor.position.x = randomInRange(-10000, 10000);
-        meteor.position.y = randomInRange(-10, 1000);
-        meteor.position.z = randomInRange(-2000, 10000);
+        meteor.position.x = randomInRange(-200, 200);
+        meteor.position.y = randomInRange(80, 200);
+        meteor.position.z = -20;
         meteor.name ="meteor";
 
         scene.add(meteor);  
@@ -463,36 +535,84 @@ var app = function(){
     };
 
     // create ground
-    var create_ground = function(){
-        var gltfLoader = new THREE.GLTFLoader();
+    // var create_ground = function(){
+    //     var gltfLoader = new THREE.GLTFLoader();
         
-        gltfLoader.load(
-            "./data/model/ground/scene.gltf",
-            function(result){
-                // object.position.y -= 10;
-                ground = result.scene.children[0];
-                ground.scale.setScalar(3);
+    //     gltfLoader.load(
+    //         "./data/model/ground/scene.gltf",
+    //         function(result){
+    //             // object.position.y -= 10;
+    //             ground = result.scene.children[0];
+    //             ground.scale.setScalar(3);
                 
-                ground.position.y=30;
-                ground.position.x = 0;
-                ground.position.z = 5000;
-                ground.position.y = -3;
-                ground.rotation.z = 3.2;
-                ground.rotation.z = 2*Math.PI/2;
-                ground.scale.y += window.innerWidth;
-                ground.scale.set(0.15,1,0.05);
-                scene.add(ground);
+    //             ground.position.y=30;
+    //             ground.position.x = 0;
+    //             ground.position.z = 5000;
+    //             ground.position.y = -3;
+    //             ground.rotation.z = 3.2;
+    //             ground.rotation.z = 2*Math.PI/2;
+    //             ground.scale.y += window.innerWidth;
+    //             ground.scale.set(0.15,1,0.05);
+    //             scene.add(ground);
 
-            },
-            function(xhr){
-                // console.log("the car model is" + (xhr.loaded / xhr.total * 100) + '% loaded');
-            },
-            function(error){
-                // console.log('An error happened ' + error);
-            },  
-        )
+    //         },
+    //         function(xhr){
+    //             // console.log("the car model is" + (xhr.loaded / xhr.total * 100) + '% loaded');
+    //         },
+    //         function(error){
+    //             // console.log('An error happened ' + error);
+    //         },  
+    //     )
         
+    // }
+
+    var create_ground = function(){
+        var geometry = new THREE.PlaneGeometry(90, 1000, 200);
+        var ground_texture = new THREE.TextureLoader().load("./data/textures/street8.jpg");
+        ground_texture.wrapS = THREE.RepeatWrapping;
+        ground_texture.wrapT = THREE.RepeatWrapping;
+        ground_texture.repeat.set( 1, 30000 );
+        var material = new THREE.MeshPhongMaterial({map:ground_texture});
+
+        ground = new THREE.Mesh(geometry,material);
+        ground.rotation.x = MY_LIBS.degToRad(-90);
+        // ground.rotation.z = MY_LIBS.degToRad(180);
+        // ground.scale.z += 1000;
+        ground.scale.y = 1000;
+        scene.add(ground);
     }
+
+    // var create_ground = function(){
+    //     var gltfLoader = new THREE.GLTFLoader();
+        
+    //     gltfLoader.load(
+    //         "./data/model/street/scene.gltf",
+    //         function(result){
+    //             // object.position.y -= 10;
+    //             ground = result.scene.children[0];
+    //             ground.scale.setScalar(3);
+                
+    //             // ground.position.y=30;
+    //             ground.position.x = -15;
+    //             // ground.position.z = 5000;
+    //             ground.position.y = -3;
+    //             // ground.rotation.z = 3.2;
+    //             ground.rotation.z = MY_LIBS.degToRad(-90);
+    //             // ground.scale.y += window.innerWidth;
+    //             ground.scale.set(10,20,10);
+    //             scene.add(ground);
+
+    //         },
+    //         function(xhr){
+    //             // console.log("the car model is" + (xhr.loaded / xhr.total * 100) + '% loaded');
+    //         },
+    //         function(error){
+    //             // console.log('An error happened ' + error);
+    //         },  
+    //     )
+        
+    // }
+
     // create robot
     var create_robot = function(){
         modelLoader = new THREE.GLTFLoader();
@@ -633,7 +753,7 @@ var app = function(){
         robot.rotation.y = 0;
 
 
-        ground.position.z = 5000;
+        // ground.position.z = 5000;
         count = 0;
         var elem = document.getElementById("score");
         elem.innerHTML = count;
@@ -659,19 +779,19 @@ var app = function(){
         camera.rotation.x = 0.3;
 
         // create an AudioListener and add it to the camera
-        const listener = new THREE.AudioListener();
-        camera.add( listener );
+        // const listener = new THREE.AudioListener();
+        // camera.add( listener );
     
-        // create a global audio source
-        const sound = new THREE.Audio( listener );
+        // // create a global audio source
+        // const sound = new THREE.Audio( listener );
 
-        const audioLoader = new THREE.AudioLoader();
-        audioLoader.load( 'data/audio/audio.mp3', function( buffer ) {
-            sound.setBuffer( buffer );
-            sound.setLoop(true);
-            sound.setVolume(0.1);
-            sound.play();
-        });
+        // const audioLoader = new THREE.AudioLoader();
+        // audioLoader.load( 'data/sounds/univer.mp3', function( buffer ) {
+        //     sound.setBuffer( buffer );
+        //     sound.setLoop(true);
+        //     sound.setVolume(0.5);
+        //     sound.play();
+        // });
 
         
         // 3.create and locate the objects on the scene
@@ -712,6 +832,12 @@ var app = function(){
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
 
+
+        // controls = new THREE.OrbitControls( camera, renderer.domElement );
+        // camera.position.set( 0, 0, 20 );
+        // controls.enableDamping = true;
+        // controls.campingFactor = 0.25;
+        // controls.update();
     };
 
     var update_meteor = function(meteor){
@@ -728,18 +854,18 @@ var app = function(){
         animate();
         callanimation[0].play();
 
-        let rand = Math.random();
-        if(rand < 100){
-            create_meteor();
-        }
+        // let rand = Math.random();
+        // if(rand < 0.1){
+        //     create_meteor();
+        // }
 
-        meteors.forEach(update_meteor);
+        // meteors.forEach(update_meteor);
 
         
         // sphere.rotation.x -= MY_LIBS.degToRad(3);
 
         animation = requestAnimationFrame(mainLoop);
-        ground.position.z += -0.5;
+        ground.position.z += -1.5;
         runModel();
         random_box1();
         random_box2();
